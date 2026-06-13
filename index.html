@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mert Hasan Yılmaz — Software Developer</title>
+  <meta name="description" content="Mert Hasan Yılmaz — Software Developer based in Istanbul, Türkiye. Open to opportunities." />
+
+  <!-- fontlar -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #08090f;
+      --surface: rgba(255, 255, 255, 0.022);
+      --surface-2: rgba(255, 255, 255, 0.04);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --text: #eef0f7;
+      --muted: #9a9eb4;
+      --faint: #62657c;
+      --violet: #8b7bff;
+      --violet-soft: #a99bff;
+      --cyan: #41e0c5;
+      --cyan-soft: #7defd9;
+      --grad: linear-gradient(110deg, var(--violet) 0%, var(--cyan) 100%);
+
+      --display: 'Space Grotesk', -apple-system, sans-serif;
+      --body: 'Inter', -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+
+      --maxw: 1080px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* arka plandaki ışıklar + grid */
+    .ambient {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
+    .ambient::before {
+      content: "";
+      position: absolute;
+      top: -12%;
+      left: -8%;
+      width: 55vw;
+      height: 55vw;
+      background: radial-gradient(circle at center, rgba(139, 123, 255, 0.16), transparent 62%);
+      filter: blur(20px);
+    }
+    .ambient::after {
+      content: "";
+      position: absolute;
+      bottom: -18%;
+      right: -10%;
+      width: 52vw;
+      height: 52vw;
+      background: radial-gradient(circle at center, rgba(65, 224, 197, 0.13), transparent 62%);
+      filter: blur(20px);
+    }
+
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 46px 46px;
+      opacity: .5;
+      -webkit-mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 0%, transparent 70%);
+      mask-image: radial-gradient(ellipse 80% 55% at 50% 0%, #000 0%, transparent 70%);
+    }
+
+    /* navbar */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(8, 9, 15, 0.72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s, background .3s;
+    }
+    nav.scrolled {
+      border-bottom-color: var(--border);
+      background: rgba(8, 9, 15, 0.85);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      height: 62px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--mono);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+    .nav-logo .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+    }
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .nav-links a { position: relative; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 1.5px;
+      background: var(--grad);
+      transition: width .25s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lang-switch {
+      display: flex;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface-2);
+      font-family: var(--mono);
+      font-size: 11px;
+    }
+    .lang-switch button {
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 6px 11px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--faint);
+      transition: .2s;
+    }
+    .lang-switch button.active {
+      background: var(--grad);
+      color: #08090f;
+      font-weight: 700;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border: 1px solid rgba(65, 224, 197, .35);
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--cyan);
+      transition: .2s;
+    }
+    .nav-cta:hover {
+      background: rgba(65, 224, 197, .08);
+      border-color: rgba(65, 224, 197, .6);
+    }
+
+    /* "müsait" yanındaki yanıp sönen nokta */
+    .pulse {
+      position: relative;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--cyan);
+    }
+    .pulse::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: var(--cyan);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%   { transform: scale(1);   opacity: .7; }
+      70%  { transform: scale(2.6); opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    .nav-toggle {
+      display: none;
+      border: none;
+      background: none;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* hero */
+    header {
+      position: relative;
+      padding: 78px 0 56px;
+    }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--violet-soft);
+    }
+    .eyebrow .line {
+      width: 42px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--violet), transparent);
+    }
+    h1.name {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(54px, 10vw, 118px);
+      line-height: .92;
+      letter-spacing: -.03em;
+      background: linear-gradient(180deg, #ffffff 30%, #b9bcd4 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    h1.name .accent {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .role-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 14px;
+      margin-top: 24px;
+      font-family: var(--mono);
+      font-size: 14px;
+    }
+    .role-row .role {
+      color: var(--cyan-soft);
+      font-weight: 500;
+      letter-spacing: .02em;
+    }
+    .role-row .sep { color: var(--faint); }
+
+    .typed {
+      min-height: 1.2em;
+      padding-right: 2px;
+      border-right: 2px solid var(--cyan);
+      color: var(--text);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 30px;
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: var(--surface-2);
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text);
+      transition: .2s;
+    }
+    .chip:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, .06);
+      border-color: var(--border-strong);
+    }
+    .chip svg { opacity: .7; }
+    .chip.primary {
+      background: linear-gradient(110deg, rgba(139, 123, 255, .16), rgba(65, 224, 197, .16));
+      border-color: rgba(139, 123, 255, .4);
+    }
+
+    /* iki kolonlu ana yerleşim */
+    .layout {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr;
+      gap: 24px;
+      align-items: start;
+      padding-bottom: 40px;
+    }
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* kartlar */
+    .card {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--surface);
+      transition: border-color .35s, transform .35s;
+    }
+    .card:hover { transform: translateY(-3px); }
+    /* hover'da beliren gradyan kenar */
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: 18px;
+      background: linear-gradient(130deg, rgba(139, 123, 255, .5), transparent 40%, transparent 60%, rgba(65, 224, 197, .4));
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .4s;
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-bottom: 22px;
+    }
+    .card-head .label {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--violet-soft);
+    }
+    .card-head .rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border-strong), transparent);
+    }
+    .card-head .num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--faint);
+    }
+
+    .about-text {
+      font-size: 15.5px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 22px;
+    }
+    .tag {
+      padding: 7px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      transition: .2s;
+    }
+    .tag:hover {
+      color: var(--text);
+      border-color: var(--border-strong);
+    }
+
+    /* yetenekler */
+    .skill-group { margin-bottom: 18px; }
+    .skill-group:last-child { margin-bottom: 0; }
+    .skill-group .gname {
+      margin-bottom: 11px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+    .skill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .skill {
+      padding: 7px 13px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--surface-2);
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--text);
+      cursor: default;
+      transition: .2s;
+    }
+    .skill:hover {
+      transform: translateY(-2px);
+      color: var(--violet-soft);
+      border-color: var(--violet);
+      box-shadow: 0 4px 16px rgba(139, 123, 255, .15);
+    }
+    .skill.cyan:hover {
+      color: var(--cyan-soft);
+      border-color: var(--cyan);
+      box-shadow: 0 4px 16px rgba(65, 224, 197, .15);
+    }
+
+    /* deneyim / eğitim zaman çizelgesi */
+    .timeline {
+      position: relative;
+      padding-left: 26px;
+    }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      bottom: 6px;
+      width: 1.5px;
+      background: linear-gradient(var(--violet), var(--cyan), transparent);
+    }
+    .t-item {
+      position: relative;
+      padding-bottom: 26px;
+    }
+    .t-item:last-child { padding-bottom: 0; }
+    .t-item::before {
+      content: "";
+      position: absolute;
+      left: -25px;
+      top: 5px;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--bg);
+      border: 2px solid var(--violet);
+      box-shadow: 0 0 0 4px rgba(139, 123, 255, .1);
+    }
+    .t-item.cyan::before {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(65, 224, 197, .1);
+    }
+    .t-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .t-role {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -.01em;
+    }
+    .t-date {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--faint);
+      white-space: nowrap;
+    }
+    .t-org {
+      margin-top: 3px;
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--cyan-soft);
+    }
+    .t-org .place { color: var(--faint); }
+    .t-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-top: 13px;
+    }
+    .t-list li {
+      position: relative;
+      padding-left: 20px;
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .t-list li::before {
+      content: "›";
+      position: absolute;
+      left: 2px;
+      top: -1px;
+      font-family: var(--mono);
+      font-weight: 700;
+      color: var(--violet);
+    }
+    .t-meta {
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+    .badge {
+      margin-left: 8px;
+      padding: 4px 10px;
+      border: 1px solid rgba(65, 224, 197, .3);
+      border-radius: 7px;
+      background: rgba(65, 224, 197, .1);
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--cyan-soft);
+      white-space: nowrap;
+    }
+
+    /* dil seviyeleri */
+    .lang {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .lang:last-child { margin-bottom: 0; }
+    .lang-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .lang-name { font-size: 15px; font-weight: 600; }
+    .lang-lvl {
+      padding: 3px 9px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .bar {
+      height: 5px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      overflow: hidden;
+    }
+    .bar span {
+      display: block;
+      width: 0;
+      height: 100%;
+      border-radius: 999px;
+      background: var(--grad);
+      transition: width 1s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    /* sertifika */
+    .cert {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .cert .ic {
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      background: linear-gradient(135deg, rgba(139, 123, 255, .18), rgba(65, 224, 197, .18));
+      font-size: 18px;
+    }
+    .cert .title {
+      font-size: 14.5px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .cert .date {
+      margin-top: 4px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--faint);
+    }
+
+    /* ilgi alanları */
+    .interest-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+    .interest {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 13px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface-2);
+      font-family: var(--mono);
+      font-size: 13px;
+      transition: .2s;
+    }
+    .interest:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+    }
+
+    .ref-text {
+      font-family: var(--mono);
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+
+    /* footer */
+    footer {
+      margin-top: 30px;
+      padding: 48px 0 60px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+    .foot-cta {
+      margin-bottom: 10px;
+      font-family: var(--display);
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 600;
+      letter-spacing: -.02em;
+    }
+    .foot-cta a {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .foot-sub {
+      margin-bottom: 26px;
+      font-size: 14.5px;
+      color: var(--muted);
+    }
+    .foot-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+    .foot-copy {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: var(--faint);
+    }
+
+    /* scroll'da beliren bloklar */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity .7s ease, transform .7s cubic-bezier(.2, .8, .2, 1);
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* mobil */
+    @media (max-width: 860px) {
+      .layout { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .nav-toggle { display: block; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 62px;
+        left: 0;
+        right: 0;
+        gap: 18px;
+        padding: 20px 24px;
+        background: rgba(8, 9, 15, .97);
+        border-bottom: 1px solid var(--border);
+      }
+    }
+    @media (max-width: 560px) {
+      header { padding: 54px 0 40px; }
+      .card { padding: 24px; }
+      .nav-cta span.txt { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal { opacity: 1; transform: none; }
+      .typed { border-right: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ambient"></div>
+  <div class="grid-bg"></div>
+
+  <nav id="nav">
+    <div class="wrap nav-inner">
+      <a href="#top" class="nav-logo"><span class="dot"></span>MHY<span style="color:var(--faint)">.dev</span></a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#about" data-i18n="nav_about">about</a>
+        <a href="#skills" data-i18n="nav_skills">skills</a>
+        <a href="#experience" data-i18n="nav_exp">experience</a>
+        <a href="#education" data-i18n="nav_edu">education</a>
+        <a href="#contact" data-i18n="nav_contact">contact</a>
+      </div>
+
+      <div class="nav-right">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button id="btnTR" type="button">TR</button>
+          <button id="btnEN" type="button">EN</button>
+        </div>
+        <a href="mailto:mhasanyilmaz24@gmail.com" class="nav-cta">
+          <span class="pulse"></span><span class="txt" data-i18n="nav_avail">Available</span>
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="7" x2="21" y2="7" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="17" x2="21" y2="17" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap" id="top">
+    <header>
+      <div class="eyebrow reveal"><span class="line"></span><span data-i18n="eyebrow">Portfolio / CV</span></div>
+      <h1 class="name reveal">Mert Hasan<br /><span class="accent">Yılmaz</span></h1>
+
+      <div class="role-row reveal">
+        <span class="role" data-i18n="role">Software Developer</span>
+        <span class="sep">//</span>
+        <span class="typed" id="typed"></span>
+      </div>
+
+      <div class="chips reveal">
+        <a href="mailto:mhasanyilmaz24@gmail.com" class="chip primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2" /><path d="m2 7 10 6 10-6" /></svg>
+          mhasanyilmaz24@gmail.com
+        </a>
+        <a href="https://www.linkedin.com/in/merthasanyilmaz/" target="_blank" rel="noopener" class="chip">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM8.34 17V10.2H6.07V17zM7.2 9.24a1.32 1.32 0 1 0 0-2.64 1.32 1.32 0 0 0 0 2.64M18 17v-3.73c0-1.99-.43-3.52-2.75-3.52a2.41 2.41 0 0 0-2.17 1.19h-.03V10.2H10.9V17h2.27v-3.36c0-.89.17-1.75 1.27-1.75s1.1 1.02 1.1 1.81V17z" /></svg>
+          LinkedIn
+        </a>
+        <a href="https://github.com/mhasanyilmaz24" target="_blank" rel="noopener" class="chip">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.09.66-.22.66-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.6 9.6 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.74c0 .27.16.58.67.48A10 10 0 0 0 22 12 10 10 0 0 0 12 2" /></svg>
+          GitHub
+        </a>
+      </div>
+    </header>
+
+    <div class="layout">
+      <!-- sol kolon -->
+      <div class="col">
+        <section class="card reveal" id="about">
+          <div class="card-head"><span class="label" data-i18n="about_label">About</span><span class="rule"></span><span class="num">01</span></div>
+          <p class="about-text" data-i18n="about_text">Aspiring software developer with strong problem-solving and fast-learning abilities. I focus on producing sustainable, efficient solutions and keep up closely with new technologies. Motivated to build user-centric software and create value in both individual and team projects.</p>
+          <div class="tags">
+            <span class="tag" data-i18n="tag1">Problem Solving</span>
+            <span class="tag" data-i18n="tag2">Continuous Learning</span>
+            <span class="tag" data-i18n="tag3">User-centric Development</span>
+          </div>
+        </section>
+
+        <section class="card reveal" id="experience">
+          <div class="card-head"><span class="label" data-i18n="exp_label">Experience</span><span class="rule"></span><span class="num">02</span></div>
+          <div class="timeline">
+            <div class="t-item">
+              <div class="t-top">
+                <span class="t-role" data-i18n="exp1_role">Software Development Intern</span>
+                <span class="t-date" data-i18n="exp1_date">Oct 2025 — Dec 2025</span>
+              </div>
+              <div class="t-org" data-i18n="exp1_org">SentiaSoft · Remote <span class="place">— Istanbul, Türkiye</span></div>
+              <ul class="t-list">
+                <li data-i18n="exp1_b1">Developed and automated a comprehensive "Store &amp; Warehouse Stock Control System" using C# within the Sentia Bilişim ecosystem.</li>
+                <li data-i18n="exp1_b2">Optimized inventory management processes through SQL-based data operations and object-oriented (OOP) design patterns.</li>
+                <li data-i18n="exp1_b3">Contributed to software development and automation workflows, improving system efficiency in a remote team setting.</li>
+              </ul>
+            </div>
+            <div class="t-item cyan">
+              <div class="t-top">
+                <span class="t-role" data-i18n="exp2_role">Sales Consultant</span>
+                <span class="t-date" data-i18n="exp2_date">Jul 2024 — Nov 2024</span>
+              </div>
+              <div class="t-org" data-i18n="exp2_org">Turkuvaz Müzik Kitap Pazarlama A.Ş. <span class="place">— Istanbul</span></div>
+              <ul class="t-list">
+                <li data-i18n="exp2_b1">Analyzed customer needs and guided them to the most suitable products.</li>
+                <li data-i18n="exp2_b2">Supported sales targets through effective communication and persuasion.</li>
+                <li data-i18n="exp2_b3">Contributed to efficient workflows by taking an active role in a fast-paced team environment.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="card reveal" id="education">
+          <div class="card-head"><span class="label" data-i18n="edu_label">Education</span><span class="rule"></span><span class="num">03</span></div>
+          <div class="timeline">
+            <div class="t-item">
+              <div class="t-top">
+                <span class="t-role" data-i18n="edu1_role">Istanbul Aydın University</span>
+                <span class="t-date" data-i18n="edu1_date">Sep 2022 — Present</span>
+              </div>
+              <div class="t-org" data-i18n="edu1_org">Software Development (English) <span class="place">— Istanbul</span></div>
+            </div>
+            <div class="t-item cyan">
+              <div class="t-top">
+                <span class="t-role" data-i18n="edu2_role">Özel Bahçelievler Boğaziçi Anatolian High School</span>
+                <span class="t-date">2017 — 2021</span>
+              </div>
+              <div class="t-org" data-i18n="edu2_org">High School Diploma <span class="place">— Istanbul</span></div>
+              <div class="t-meta"><span data-i18n="edu2_meta">High School Diploma</span> <span class="badge" data-i18n="edu2_badge">GPA 90 / 100</span></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- sağ kolon -->
+      <div class="col">
+        <section class="card reveal" id="skills">
+          <div class="card-head"><span class="label" data-i18n="skills_label">Skills</span><span class="rule"></span><span class="num">04</span></div>
+          <div class="skill-group">
+            <div class="gname" data-i18n="skills_g1">// Languages</div>
+            <div class="skill-row">
+              <span class="skill">C</span><span class="skill">C++</span><span class="skill">C#</span>
+              <span class="skill">Java</span><span class="skill">Python</span><span class="skill">SQL</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="gname" data-i18n="skills_g2">// Web</div>
+            <div class="skill-row">
+              <span class="skill cyan">HTML</span><span class="skill cyan">CSS</span>
+              <span class="skill cyan">JavaScript</span><span class="skill cyan" data-i18n="skill_webdesign">Web Design</span>
+            </div>
+          </div>
+          <div class="skill-group">
+            <div class="gname" data-i18n="skills_g3">// Concepts &amp; Tools</div>
+            <div class="skill-row">
+              <span class="skill">OOP</span><span class="skill" data-i18n="skill_softdev">Software Development</span>
+              <span class="skill" data-i18n="skill_auto">Automation</span><span class="skill">MS Office</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card reveal">
+          <div class="card-head"><span class="label" data-i18n="langs_label">Languages</span><span class="rule"></span><span class="num">05</span></div>
+          <div class="lang">
+            <div class="lang-top"><span class="lang-name" data-i18n="lang_tr">Turkish</span><span class="lang-lvl" data-i18n="lang_tr_lvl">Native</span></div>
+            <div class="bar"><span data-w="100%"></span></div>
+          </div>
+          <div class="lang">
+            <div class="lang-top"><span class="lang-name" data-i18n="lang_en">English</span><span class="lang-lvl" data-i18n="lang_en_lvl">Upper-Intermediate</span></div>
+            <div class="bar"><span data-w="75%"></span></div>
+          </div>
+        </section>
+
+        <section class="card reveal">
+          <div class="card-head"><span class="label" data-i18n="cert_label">Certificates</span><span class="rule"></span><span class="num">06</span></div>
+          <div class="cert">
+            <div class="ic">🏅</div>
+            <div>
+              <div class="title" data-i18n="cert1_title">From Past to Future: Sustainability in Istanbul</div>
+              <div class="date" data-i18n="cert1_date">May 2024</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card reveal">
+          <div class="card-head"><span class="label" data-i18n="int_label">Interests</span><span class="rule"></span><span class="num">07</span></div>
+          <div class="interest-row">
+            <span class="interest" data-i18n="int1">💻 Coding</span>
+            <span class="interest" data-i18n="int2">🎮 Game Development</span>
+            <span class="interest" data-i18n="int3">🌐 Web App Projects</span>
+            <span class="interest" data-i18n="int4">🎬 Video Editing</span>
+            <span class="interest" data-i18n="int5">✍️ Tech Blogging</span>
+            <span class="interest" data-i18n="int6">⚽ Football</span>
+          </div>
+        </section>
+
+        <section class="card reveal">
+          <div class="card-head"><span class="label" data-i18n="ref_label">References</span><span class="rule"></span><span class="num">08</span></div>
+          <p class="ref-text" data-i18n="ref_text">Available upon request.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <footer id="contact">
+    <div class="wrap">
+      <div class="foot-cta"><a href="mailto:mhasanyilmaz24@gmail.com" data-i18n="foot_cta">Let's build something.</a></div>
+      <p class="foot-sub" data-i18n="foot_sub">Open to internships, junior roles and freelance work — based in Istanbul, available remotely.</p>
+      <div class="foot-links">
+        <a href="mailto:mhasanyilmaz24@gmail.com" class="chip" data-i18n="foot_email">Email</a>
+        <a href="https://www.linkedin.com/in/merthasanyilmaz/" target="_blank" rel="noopener" class="chip">LinkedIn</a>
+        <a href="https://github.com/mhasanyilmaz24" target="_blank" rel="noopener" class="chip">GitHub</a>
+      </div>
+      <p class="foot-copy">© <span id="year"></span> Mert Hasan Yılmaz</p>
+    </div>
+  </footer>
+
+  <script>
+    // iki dildeki metinler. bir şey değiştirirken aynı anahtarı hem en hem tr'de güncelle
+    const I18N = {
+      en: {
+        nav_about: "about", nav_skills: "skills", nav_exp: "experience", nav_edu: "education", nav_contact: "contact", nav_avail: "Available",
+        eyebrow: "Portfolio / CV", role: "Software Developer",
+        about_label: "About",
+        about_text: "Aspiring software developer with strong problem-solving and fast-learning abilities. I focus on producing sustainable, efficient solutions and keep up closely with new technologies. Motivated to build user-centric software and create value in both individual and team projects.",
+        tag1: "Problem Solving", tag2: "Continuous Learning", tag3: "User-centric Development",
+        exp_label: "Experience",
+        exp1_role: "Software Development Intern", exp1_date: "Oct 2025 — Dec 2025",
+        exp1_org: 'SentiaSoft · Remote <span class="place">— Istanbul, Türkiye</span>',
+        exp1_b1: 'Developed and automated a comprehensive "Store &amp; Warehouse Stock Control System" using C# within the Sentia Bilişim ecosystem.',
+        exp1_b2: "Optimized inventory management processes through SQL-based data operations and object-oriented (OOP) design patterns.",
+        exp1_b3: "Contributed to software development and automation workflows, improving system efficiency in a remote team setting.",
+        exp2_role: "Sales Consultant", exp2_date: "Jul 2024 — Nov 2024",
+        exp2_org: 'Turkuvaz Müzik Kitap Pazarlama A.Ş. <span class="place">— Istanbul</span>',
+        exp2_b1: "Analyzed customer needs and guided them to the most suitable products.",
+        exp2_b2: "Supported sales targets through effective communication and persuasion.",
+        exp2_b3: "Contributed to efficient workflows by taking an active role in a fast-paced team environment.",
+        edu_label: "Education",
+        edu1_role: "Istanbul Aydın University", edu1_date: "Sep 2022 — Present",
+        edu1_org: 'Software Development (English) <span class="place">— Istanbul</span>',
+        edu2_role: "Özel Bahçelievler Boğaziçi Anatolian High School",
+        edu2_org: 'High School Diploma <span class="place">— Istanbul</span>',
+        edu2_meta: "High School Diploma", edu2_badge: "GPA 90 / 100",
+        skills_label: "Skills", skills_g1: "// Languages", skills_g2: "// Web", skills_g3: "// Concepts &amp; Tools",
+        skill_webdesign: "Web Design", skill_softdev: "Software Development", skill_auto: "Automation",
+        langs_label: "Languages", lang_tr: "Turkish", lang_tr_lvl: "Native", lang_en: "English", lang_en_lvl: "Upper-Intermediate",
+        cert_label: "Certificates", cert1_title: "From Past to Future: Sustainability in Istanbul", cert1_date: "May 2024",
+        int_label: "Interests",
+        int1: "💻 Coding", int2: "🎮 Game Development", int3: "🌐 Web App Projects", int4: "🎬 Video Editing", int5: "✍️ Tech Blogging", int6: "⚽ Football",
+        ref_label: "References", ref_text: "Available upon request.",
+        foot_cta: "Let's build something.",
+        foot_sub: "Open to internships, junior roles and freelance work — based in Istanbul, available remotely.",
+        foot_email: "Email",
+        typed: ["building user-centric software", "C# · Python · JavaScript", "open to opportunities", "fast learner, problem solver"]
+      },
+      tr: {
+        nav_about: "hakkımda", nav_skills: "yetenekler", nav_exp: "deneyim", nav_edu: "eğitim", nav_contact: "iletişim", nav_avail: "Müsait",
+        eyebrow: "Portföy / CV", role: "Yazılım Geliştirici",
+        about_label: "Hakkımda",
+        about_text: "Güçlü problem çözme ve hızlı öğrenme yeteneklerine sahip, gelişime açık bir yazılım geliştiricisiyim. Sürdürülebilir ve verimli çözümler üretmeye odaklanır, yeni teknolojileri yakından takip ederim. Kullanıcı odaklı yazılımlar geliştirmeye ve hem bireysel hem ekip projelerinde değer katmaya hevesliyim.",
+        tag1: "Problem Çözme", tag2: "Sürekli Öğrenme", tag3: "Kullanıcı Odaklı Geliştirme",
+        exp_label: "Deneyim",
+        exp1_role: "Yazılım Geliştirme Stajyeri", exp1_date: "Eki 2025 — Ara 2025",
+        exp1_org: 'SentiaSoft · Uzaktan <span class="place">— İstanbul, Türkiye</span>',
+        exp1_b1: 'Sentia Bilişim ekosistemi içinde C# kullanarak kapsamlı bir "Mağaza & Depo Stok Kontrol Sistemi" geliştirdim ve otomatize ettim.',
+        exp1_b2: "SQL tabanlı veri işlemleri ve nesne yönelimli programlama (OOP) tasarım desenleriyle stok yönetimi süreçlerini iyileştirdim.",
+        exp1_b3: "Uzaktan çalışan bir ekipte yazılım geliştirme ve otomasyon süreçlerine katkıda bulunarak sistem verimliliğini artırdım.",
+        exp2_role: "Satış Danışmanı", exp2_date: "Tem 2024 — Kas 2024",
+        exp2_org: 'Turkuvaz Müzik Kitap Pazarlama A.Ş. <span class="place">— İstanbul</span>',
+        exp2_b1: "Müşteri ihtiyaçlarını analiz ederek onları en uygun ürünlere yönlendirdim.",
+        exp2_b2: "Etkili iletişim ve ikna becerileriyle satış hedeflerine katkı sağladım.",
+        exp2_b3: "Hızlı tempolu bir ekip ortamında aktif rol alarak verimli iş akışlarına katkıda bulundum.",
+        edu_label: "Eğitim",
+        edu1_role: "İstanbul Aydın Üniversitesi", edu1_date: "Eyl 2022 — Devam ediyor",
+        edu1_org: 'Yazılım Geliştirme (İngilizce) <span class="place">— İstanbul</span>',
+        edu2_role: "Özel Bahçelievler Boğaziçi Anadolu Lisesi",
+        edu2_org: 'Lise Diploması <span class="place">— İstanbul</span>',
+        edu2_meta: "Lise Diploması", edu2_badge: "Not Ort. 90 / 100",
+        skills_label: "Yetenekler", skills_g1: "// Diller", skills_g2: "// Web", skills_g3: "// Kavramlar & Araçlar",
+        skill_webdesign: "Web Tasarımı", skill_softdev: "Yazılım Geliştirme", skill_auto: "Otomasyon",
+        langs_label: "Diller", lang_tr: "Türkçe", lang_tr_lvl: "Ana Dil", lang_en: "İngilizce", lang_en_lvl: "Orta-İleri",
+        cert_label: "Sertifikalar", cert1_title: "Geçmişten Geleceğe: İstanbul'da Sürdürülebilirlik", cert1_date: "Mayıs 2024",
+        int_label: "İlgi Alanları",
+        int1: "💻 Kodlama", int2: "🎮 Oyun Geliştirme", int3: "🌐 Web Uygulama Projeleri", int4: "🎬 Video Düzenleme", int5: "✍️ Teknoloji Blogu", int6: "⚽ Futbol",
+        ref_label: "Referanslar", ref_text: "Talep üzerine sunulur.",
+        foot_cta: "Birlikte bir şeyler inşa edelim.",
+        foot_sub: "Staj, junior pozisyonlar ve freelance işlere açığım — İstanbul merkezli, uzaktan da çalışabilirim.",
+        foot_email: "E-posta",
+        typed: ["kullanıcı odaklı yazılımlar geliştiriyorum", "C# · Python · JavaScript", "fırsatlara açığım", "hızlı öğrenen, problem çözen"]
+      }
+    };
+
+    const $ = (s) => document.querySelector(s);
+
+    // yıl
+    $("#year").textContent = new Date().getFullYear();
+
+    // scroll edince navbar'a çizgi gelsin
+    const nav = $("#nav");
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("scrolled", window.scrollY > 20);
+    });
+
+    // mobil menü
+    const links = $("#navLinks");
+    $("#navToggle").addEventListener("click", () => links.classList.toggle("open"));
+    links.querySelectorAll("a").forEach((a) => {
+      a.addEventListener("click", () => links.classList.remove("open"));
+    });
+
+    // kartlar görününce yumuşakça belirsin
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("in");
+        entry.target.querySelectorAll(".bar span").forEach((bar) => {
+          bar.style.width = bar.dataset.w;
+        });
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+
+    // hero'daki yazı yazma efekti
+    const typedEl = $("#typed");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let phrases = [];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    let timer = null;
+
+    function typeLoop() {
+      const current = phrases[phraseIndex];
+      typedEl.textContent = current.slice(0, charIndex);
+
+      if (!deleting && charIndex < current.length) {
+        charIndex++;
+        timer = setTimeout(typeLoop, 55);
+      } else if (!deleting) {
+        deleting = true;
+        timer = setTimeout(typeLoop, 1600); // tam yazınca biraz bekle
+      } else if (charIndex > 0) {
+        charIndex--;
+        timer = setTimeout(typeLoop, 28);
+      } else {
+        deleting = false;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        timer = setTimeout(typeLoop, 350);
+      }
+    }
+
+    function startTyping(list) {
+      clearTimeout(timer);
+      phrases = list;
+      phraseIndex = 0;
+      charIndex = 0;
+      deleting = false;
+      if (reduceMotion) {
+        typedEl.textContent = phrases[0];
+      } else {
+        typeLoop();
+      }
+    }
+
+    // dili uygula
+    function setLanguage(lang) {
+      const dict = I18N[lang] || I18N.en;
+
+      document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key] != null) el.innerHTML = dict[key];
+      });
+
+      document.documentElement.lang = lang;
+      $("#btnTR").classList.toggle("active", lang === "tr");
+      $("#btnEN").classList.toggle("active", lang === "en");
+
+      try { localStorage.setItem("lang", lang); } catch (e) {}
+
+      startTyping(dict.typed);
+    }
+
+    // ilk açılışta: kayıtlı tercih varsa onu, yoksa tarayıcı diline göre seç
+    function pickLanguage() {
+      try {
+        const saved = localStorage.getItem("lang");
+        if (saved) return saved;
+      } catch (e) {}
+      return (navigator.language || "en").toLowerCase().startsWith("tr") ? "tr" : "en";
+    }
+
+    $("#btnTR").addEventListener("click", () => setLanguage("tr"));
+    $("#btnEN").addEventListener("click", () => setLanguage("en"));
+
+    setLanguage(pickLanguage());
+  </script>
+</body>
+</html>
