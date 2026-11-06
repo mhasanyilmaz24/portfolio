@@ -191,7 +191,7 @@ a{color:#E9EAF2}a:hover{color:#FFFFFF}
 <body>
 <noscript><p style="font-family:sans-serif;color:#E9EAF2;padding:24px">Bu site JavaScript ile çalışır. İletişim: <a style="color:#3FD8C2" href="mailto:mhasanyilmaz24@gmail.com">mhasanyilmaz24@gmail.com</a> · <a style="color:#3FD8C2" href="https://www.linkedin.com/in/merthasanyilmaz/">LinkedIn</a> · <a style="color:#3FD8C2" href="https://github.com/mhasanyilmaz24">GitHub</a></p></noscript>
 <div id="app" v-cloak>
-<div :class="rootCls" @mousemove="onMove" style="position: relative; overflow: hidden; min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif">
+<div :class="rootCls" @mousemove="onMove" @click="onNav" style="position: relative; overflow: hidden; min-height: 100vh; background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif">
 
   <!-- Intro -->
   <template v-if="showIntro">
@@ -650,6 +650,7 @@ class Component extends DCLogic {
     try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
     this.reduce = reduce;
     this.startBoot();
+    try { if (window.location.hash) window.history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) {}
   }
   componentWillUnmount() { clearTimeout(this.pickT); this.unobserve(); clearInterval(this.bootI); clearInterval(this.codeI); clearTimeout(this.bootOutT); clearTimeout(this.codeStartT); (this.codeOutT || []).forEach(clearTimeout); if (this.timer) clearInterval(this.timer); if (this.outT) clearTimeout(this.outT); if (this.revT) clearTimeout(this.revT); }
   bootTimes(t) {
@@ -819,6 +820,19 @@ class Component extends DCLogic {
         c.style.setProperty('--ry', ((x / r.width - 0.5) * 16).toFixed(2) + 'deg');
         c.style.setProperty('--rx', ((0.5 - y / r.height) * 16).toFixed(2) + 'deg');
       }
+    };
+    const onNav = (e) => {
+      const a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+      if (!a) return;
+      e.preventDefault();
+      const id = a.getAttribute('href').slice(1);
+      const target = id && id !== 'top' ? document.getElementById(id) : null;
+      const behavior = this.reduce ? 'auto' : 'smooth';
+      try {
+        if (target) target.scrollIntoView({ behavior, block: 'start' });
+        else window.scrollTo({ top: 0, behavior });
+      } catch (err) {}
+      try { if (window.location.hash) window.history.replaceState(null, '', window.location.pathname + window.location.search); } catch (err) {}
     };
     const tiltReset = (e) => {
       const c = e.currentTarget;
@@ -992,7 +1006,7 @@ class Component extends DCLogic {
       });
     });
     return {
-      rootCls: 'mhy-root' + (isLight ? ' light' : '') + (fav ? ' pal-' + fav : ''), isLight, isDark: !isLight, toggleTheme,
+      onNav, rootCls: 'mhy-root' + (isLight ? ' light' : '') + (fav ? ' pal-' + fav : ''), isLight, isDark: !isLight, toggleTheme,
       themeLabel: isLight ? t.themeToDark : t.themeToLight,
       bootShow: phase !== 'done', bootDone: phase === 'done',
       showCards: phase === 'done' && this.state.introStep !== 'ask', showAsk: phase === 'done' && this.state.introStep === 'ask',
