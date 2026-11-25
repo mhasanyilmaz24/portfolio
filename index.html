@@ -138,7 +138,9 @@ a{color:#E9EAF2}a:hover{color:#FFFFFF}
 .fx-item{transform:translateX(-26px);filter:blur(6px)}
 .rv.from-top.fx-up{transform:perspective(1000px) translateY(-60px) rotateX(20deg) scale(.96);transform-origin:50% 100%}
 .rv.from-top.fx-item{transform:translateX(26px)}
-.rv.in{opacity:1;filter:none;transform:none}
+.rv.fx-rise{transform:translateY(50px);filter:none}
+.rv.from-top.fx-rise{transform:translateY(-50px)}
+.rv.in,.rv.in.from-top.fx-up,.rv.in.from-top.fx-item,.rv.in.fx-rise,.rv.in.from-top.fx-rise{opacity:1;filter:none;transform:none}
 .rv.done{transition-delay:0s;transition:opacity .3s ease,transform .35s cubic-bezier(.2,.8,.2,1),border-color .3s ease}
 .card.rv.done:hover{transform:translateY(-3px)}
 .rv .chip{opacity:0;transform:translateY(10px) scale(.7)}
@@ -386,7 +388,7 @@ a{color:#E9EAF2}a:hover{color:#FFFFFF}
         <div class="shrow" data-file="Experience" style="display: flex; align-items: center; gap: 12px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; color: var(--violet)"><h2 class="sh" style="margin: 0; font-size: 11px; font-weight: 700">{{t.hExp}}</h2><span style="flex: 1; height: 1px; background: linear-gradient(90deg, var(--line3), transparent)" aria-hidden="true"></span><span style="color: var(--faint)">02</span></div>
         <div style="margin-top: 22px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); grid-auto-rows: 1fr; gap: 16px">
           <template v-for="j in jobs">
-            <div class="rv fx-up" :style="j.d">
+            <div class="rv fx-rise" :style="j.d">
               <div :class="j.cls">
                 <div class="flip-in">
                   <article class="face front" :aria-hidden="j.frontHidden">
@@ -783,6 +785,7 @@ class Component extends DCLogic {
     try { els = Array.from(document.querySelectorAll('.rv')); } catch (e) { return; }
     const show = (el) => {
       if (el.classList.contains('in')) return;
+      el.classList.remove('from-top');
       el.classList.add('in');
       let d = 0;
       try { d = parseFloat(getComputedStyle(el).getPropertyValue('--d')) || 0; } catch (e) {}
