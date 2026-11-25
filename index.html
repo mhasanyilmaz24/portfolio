@@ -173,6 +173,8 @@ a{color:#E9EAF2}a:hover{color:#FFFFFF}
 .backf{transform:rotateY(180deg);background:radial-gradient(circle at 0% 100%,color-mix(in srgb, var(--a2) 16%, transparent),transparent 55%),var(--face)}
 .fnum{position:absolute;right:14px;bottom:56px;font-family:'Space Grotesk',sans-serif;font-size:96px;font-weight:700;line-height:1;letter-spacing:-0.05em;background:linear-gradient(135deg,color-mix(in srgb, var(--a1) 35%, transparent),color-mix(in srgb, var(--a2) 8%, transparent));-webkit-background-clip:text;background-clip:text;color:transparent;pointer-events:none}
 .flipBtn{position:absolute;inset:0;width:100%;height:100%;margin:0;padding:0;background:none;border:0;border-radius:16px;cursor:pointer;z-index:2}
+.flip.on .front,.flip:not(.on) .backf{pointer-events:none}
+.jlink:hover{background:color-mix(in srgb, var(--a2) 14%, transparent)}
 .flipBtn:focus-visible{outline:2px solid var(--a1);outline-offset:2px}
 .hintIco{transition:transform .6s cubic-bezier(.2,.8,.2,1)}
 .flip:hover .hintIco{transform:rotate(-200deg)}
@@ -415,6 +417,9 @@ a{color:#E9EAF2}a:hover{color:#FFFFFF}
                         <span style="padding: 5px 9px; border: 1px solid var(--line2); border-radius: 6px; background: var(--chip)">{{k}}</span>
                       </template>
                     </div>
+                    <template v-if="j.hasLink">
+                      <a class="jlink" :href="j.link" target="_blank" rel="noopener" :tabindex="j.backTab" style="position: relative; z-index: 3; align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 12px; border-radius: 8px; border: 1px solid var(--a2b); color: var(--tealText); text-decoration: none; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700">{{j.linkLabel}} ↗</a>
+                    </template>
                     <span style="margin-top: auto; display: inline-flex; align-items: center; gap: 8px; padding-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 700; color: var(--muted)"><svg class="hintIco" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>{{t.flipBack}}</span>
                     <button type="button" class="flipBtn" @click="j.toggle" :aria-expanded="j.expanded" :aria-label="t.flipBack" :tabindex="j.backTab"></button>
                   </article>
@@ -587,7 +592,11 @@ class Component extends DCLogic {
         boot1: 'profil yükleniyor', boot2: 'deneyimler derleniyor', boot3: 'bağlantılar yükleniyor', bootReady: 'hazır — hoş geldin.', skip: 'atla',
         flipHint: 'Detaylar için tıkla', flipBack: 'Geri çevir', whatIDid: 'NE YAPTIM', usedTech: 'KULLANDIKLARIM', showDetails: 'detaylarını göster',
         tagRemote: 'Uzaktan', tagOnsite: 'Yerinde', tagHybrid: 'Hibrit',
-        okTitle: 'Stajyer', okDate: 'Eyl 2026 — Kas 2026', spTitle: 'Yazılım Stajyeri', spDate: 'Haz 2026 — Tem 2026', tech2: ['İletişim', 'Müşteri Analizi', 'Satış', 'Takım Çalışması'],
+        okTitle: 'Stajyer', okDate: 'Eyl 2026 — Kas 2026', spTitle: 'Yazılım Stajyeri', spDate: 'Haz 2026 — Tem 2026',
+        sp1: 'React ve Tailwind CSS ile şirketlerin staj ilanlarını ekleyip düzenleyip silebildiği "CodeCampus Staj Modülü" yönetim panelini geliştirdim.',
+        sp2: 'Zorunlu alanlar, kontenjan ve 0–100 ATS uyum eşiği için form doğrulaması ile silme işlemlerine onay diyaloğu ekledim.',
+        sp3: 'Verileri ayrı bir servis katmanıyla LocalStorage üzerinde yönettim; son başvuru tarihine göre "kaç gün kaldı" etiketleri ve ilan istatistikleri ekledim.',
+        projLink: 'CodeCampus · GitHub', tech2: ['İletişim', 'Müşteri Analizi', 'Satış', 'Takım Çalışması'],
         codeBuild: 'derleniyor … 0 hata, 0 uyarı', codeOk: 'Hazır, iş teklifine açık',
         askKicker: 'SON BİR SORU', askTitle: 'En sevdiğin yazılım dili hangisi?', askSub: 'Seçimine göre CV sayfasının görünümü değişecek.',
         askTheme: 'TEMA', stC: 'RETRO', stPy: 'YUMUŞAK', stJava: 'IDE', askSkip: 'Fark etmez, varsayılanla devam et', hi: 'Merhaba!', favLabel: 'Favori dil:', change: 'değiştir'
@@ -623,7 +632,11 @@ class Component extends DCLogic {
         boot1: 'loading profile', boot2: 'compiling experience', boot3: 'loading links', bootReady: 'ready — welcome.', skip: 'skip',
         flipHint: 'Click for details', flipBack: 'Flip back', whatIDid: 'WHAT I DID', usedTech: 'TOOLS & SKILLS', showDetails: 'show details',
         tagRemote: 'Remote', tagOnsite: 'On-site', tagHybrid: 'Hybrid',
-        okTitle: 'Intern', okDate: 'Sep 2026 — Nov 2026', spTitle: 'Software Intern', spDate: 'Jun 2026 — Jul 2026', tech2: ['Communication', 'Customer Analysis', 'Sales', 'Teamwork'],
+        okTitle: 'Intern', okDate: 'Sep 2026 — Nov 2026', spTitle: 'Software Intern', spDate: 'Jun 2026 — Jul 2026',
+        sp1: 'Built "CodeCampus Internship Module", a React + Tailwind CSS admin panel where companies create, edit and delete internship listings.',
+        sp2: 'Added form validation for required fields, quota and a 0–100 ATS match threshold, plus a confirmation dialog for deletions.',
+        sp3: 'Managed data in LocalStorage through a dedicated service layer and added "days left" deadline badges and listing statistics.',
+        projLink: 'CodeCampus · GitHub', tech2: ['Communication', 'Customer Analysis', 'Sales', 'Teamwork'],
         codeBuild: 'building … 0 errors, 0 warnings', codeOk: 'Ready, open to offers',
         askKicker: 'ONE LAST QUESTION', askTitle: "What's your favorite programming language?", askSub: 'The CV page will restyle itself based on your pick.',
         askTheme: 'THEME', stC: 'RETRO', stPy: 'SOFT', stJava: 'IDE', askSkip: 'No preference, keep the default', hi: 'Hello!', favLabel: 'Favorite language:', change: 'change'
@@ -979,7 +992,7 @@ class Component extends DCLogic {
     const flips = this.state.flips;
     const jobDefs = [
       { title: t.okTitle, date: t.okDate, co: 'Okatan Sağlık AR-GE A.Ş.', loc: t.loc, tag: t.tagHybrid, bullets: [], tech: [t.swDev], dot: 'var(--a1)' },
-      { title: t.spTitle, date: t.spDate, co: 'Software Persona', loc: t.loc, tag: t.tagRemote, bullets: [], tech: [t.swDev, 'CSS'], dot: 'var(--a2)' },
+      { title: t.spTitle, date: t.spDate, co: 'Software Persona', loc: t.loc, tag: t.tagRemote, bullets: [t.sp1, t.sp2, t.sp3], tech: ['React', 'Tailwind CSS', 'JavaScript', 'Vite'], dot: 'var(--a2)', link: 'https://github.com/mhasanyilmaz24/codecampus-staj-modulu', linkLabel: t.projLink },
       { title: t.e1Title, date: t.e1Date, co: 'SentiaSoft', loc: t.e1Loc.replace('— ', ''), tag: t.tagRemote, bullets: [t.e1b1, t.e1b2, t.e1b3], tech: ['C#', 'SQL', 'OOP', t.automation], dot: 'var(--a1)' },
       { title: t.e2Title, date: t.e2Date, co: 'Turkuvaz Müzik Kitap Pazarlama A.Ş.', loc: t.cityDash.replace('— ', ''), tag: t.tagOnsite, bullets: [t.e2b1, t.e2b2, t.e2b3], tech: t.tech2, dot: 'var(--a2)' }
     ];
@@ -997,6 +1010,7 @@ class Component extends DCLogic {
         openLabel: j.title + ' — ' + t.showDetails,
         dotStyle: 'color: ' + j.dot,
         hasBullets: j.bullets.length > 0,
+        hasLink: !!j.link,
         toggle: () => this.setState({ flips: Object.assign({}, this.state.flips, { [i]: !this.state.flips[i] }) })
       });
     });
