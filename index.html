@@ -596,6 +596,11 @@ class Component extends DCLogic {
         sp1: 'React ve Tailwind CSS ile şirketlerin staj ilanlarını ekleyip düzenleyip silebildiği "CodeCampus Staj Modülü" yönetim panelini geliştirdim.',
         sp2: 'Zorunlu alanlar, kontenjan ve 0–100 ATS uyum eşiği için form doğrulaması ile silme işlemlerine onay diyaloğu ekledim.',
         sp3: 'Verileri ayrı bir servis katmanıyla LocalStorage üzerinde yönettim; son başvuru tarihine göre "kaç gün kaldı" etiketleri ve ilan istatistikleri ekledim.',
+        ok1: 'Görüntü ve videodan Türk plakalarını okuyan bir plaka tanıma sistemi geliştirdim (Python).',
+        ok2: 'Plakaları YOLOv9 ile tespit edip OCR ile okuyan, GPU olmadan CPU’da çalışan bir işlem hattı kurdum; Türk plaka formatı kurallarıyla OCR hatalarını (O↔0, B↔8) düzelten bir modül yazdım.',
+        ok3: 'Araçları video kareleri boyunca takip edip okumaları oylamayla birleştirdim; sentetik plakalarla yapılan testlerde zor koşullardaki doğruluk %78,5’ten %97,5’e çıktı.',
+        ok4: 'Sonuçları göstermek için Streamlit ile bir web arayüzü geliştirdim.',
+        cvTag: 'Bilgisayarlı Görü',
         projLink: 'CodeCampus · GitHub', tech2: ['İletişim', 'Müşteri Analizi', 'Satış', 'Takım Çalışması'],
         codeBuild: 'derleniyor … 0 hata, 0 uyarı', codeOk: 'Hazır, iş teklifine açık',
         askKicker: 'SON BİR SORU', askTitle: 'En sevdiğin yazılım dili hangisi?', askSub: 'Seçimine göre CV sayfasının görünümü değişecek.',
@@ -636,6 +641,11 @@ class Component extends DCLogic {
         sp1: 'Built "CodeCampus Internship Module", a React + Tailwind CSS admin panel where companies create, edit and delete internship listings.',
         sp2: 'Added form validation for required fields, quota and a 0–100 ATS match threshold, plus a confirmation dialog for deletions.',
         sp3: 'Managed data in LocalStorage through a dedicated service layer and added "days left" deadline badges and listing statistics.',
+        ok1: 'Developed a license plate recognition system for Turkish plates from images and video (Python).',
+        ok2: 'Built a pipeline that detects plates with YOLOv9 and reads them with OCR on CPU without a GPU, plus a module that fixes OCR errors (e.g. O↔0, B↔8) using Turkish plate format rules.',
+        ok3: 'Tracked vehicles across video frames and combined readings by voting into one reliable result per vehicle; on synthetic plates, accuracy under hard conditions rose from 78.5% to 97.5%.',
+        ok4: 'Built a Streamlit web interface to demo the results.',
+        cvTag: 'Computer Vision',
         projLink: 'CodeCampus · GitHub', tech2: ['Communication', 'Customer Analysis', 'Sales', 'Teamwork'],
         codeBuild: 'building … 0 errors, 0 warnings', codeOk: 'Ready, open to offers',
         askKicker: 'ONE LAST QUESTION', askTitle: "What's your favorite programming language?", askSub: 'The CV page will restyle itself based on your pick.',
@@ -991,7 +1001,7 @@ class Component extends DCLogic {
     // flip cards
     const flips = this.state.flips;
     const jobDefs = [
-      { title: t.okTitle, date: t.okDate, co: 'Okatan Sağlık AR-GE A.Ş.', loc: t.loc, tag: t.tagHybrid, bullets: [], tech: [t.swDev], dot: 'var(--a1)' },
+      { title: t.okTitle, date: t.okDate, co: 'Okatan Sağlık AR-GE A.Ş.', loc: t.loc, tag: t.tagRemote, bullets: [t.ok1, t.ok2, t.ok3, t.ok4], tech: ['Python', 'YOLOv9', 'OpenCV', 'OCR', 'Streamlit', t.cvTag], dot: 'var(--a1)' },
       { title: t.spTitle, date: t.spDate, co: 'Software Persona', loc: t.loc, tag: t.tagRemote, bullets: [t.sp1, t.sp2, t.sp3], tech: ['React', 'Tailwind CSS', 'JavaScript', 'Vite'], dot: 'var(--a2)', link: 'https://github.com/mhasanyilmaz24/codecampus-staj-modulu', linkLabel: t.projLink },
       { title: t.e1Title, date: t.e1Date, co: 'SentiaSoft', loc: t.e1Loc.replace('— ', ''), tag: t.tagRemote, bullets: [t.e1b1, t.e1b2, t.e1b3], tech: ['C#', 'SQL', 'OOP', t.automation], dot: 'var(--a1)' },
       { title: t.e2Title, date: t.e2Date, co: 'Turkuvaz Müzik Kitap Pazarlama A.Ş.', loc: t.cityDash.replace('— ', ''), tag: t.tagOnsite, bullets: [t.e2b1, t.e2b2, t.e2b3], tech: t.tech2, dot: 'var(--a2)' }
